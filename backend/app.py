@@ -36,7 +36,40 @@ else:
 
 # ✅ Initialize VADER sentiment analyzer
 sentiment_analyzer = SentimentIntensityAnalyzer()
+# ✅ API for Sentiment Analysis
+@app.route('/predict_sentiment', methods=['POST'])
+def predict_sentiment():
+    data = request.json
+    text = data.get("text", "")
 
+    if not text.strip():
+        return jsonify({"error": "No text provided"}), 400
+
+    sentiment_score = sentiment_analyzer.polarity_scores(text)["compound"]
+    sentiment_label = "Positive" if sentiment_score > 0.05 else ("Negative" if sentiment_score < -0.05 else "Neutral")
+
+    return jsonify({"sentiment_score": sentiment_score, "sentiment_label": sentiment_label})                                                                                                                    # ✅ Train KMeans for Hashtag Clustering (Pre-trained for speed)
+vectorizer = TfidfVectorizer()
+sample_hashtags = ["#AI", "#Python", "#DataScience", "#MachineLearning", "#DeepLearning"]
+X_sample = vectorizer.fit_transform(sample_hashtags)
+
+kmeans = KMeans(n_clusters=5, random_state=42, n_init=10)
+kmeans.fit(X_sample)  # ✅ Fit KMeans on sample data
+
+@app.route('/predict_hashtag_cluster', methods=['POST'])
+def predict_hashtag_cluster():
+    data = request.json
+    hashtags = data.get("hashtags", "").strip()
+
+    if not hashtags:
+        return jsonify({"error": "No hashtags provided"}), 400
+
+    try:
+        X = vectorizer.transform([hashtags])
+        cluster = kmeans.predict(X)[0]
+        return jsonify({"cluster": int(cluster)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # ✅ API for Engagement Prediction
 @app.route('/predict_engagement', methods=['POST'])

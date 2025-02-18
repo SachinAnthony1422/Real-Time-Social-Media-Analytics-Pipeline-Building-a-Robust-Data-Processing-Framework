@@ -37,19 +37,7 @@ else:
 # ✅ Initialize VADER sentiment analyzer
 sentiment_analyzer = SentimentIntensityAnalyzer()
 
-# ✅ API for Sentiment Analysis
-@app.route('/predict_sentiment', methods=['POST'])
-def predict_sentiment():
-    data = request.json
-    text = data.get("text", "")
 
-    if not text.strip():
-        return jsonify({"error": "No text provided"}), 400
-
-    sentiment_score = sentiment_analyzer.polarity_scores(text)["compound"]
-    sentiment_label = "Positive" if sentiment_score > 0.05 else ("Negative" if sentiment_score < -0.05 else "Neutral")
-
-    return jsonify({"sentiment_score": sentiment_score, "sentiment_label": sentiment_label})
 
 # ✅ Train KMeans for Hashtag Clustering (Pre-trained for speed)
 vectorizer = TfidfVectorizer()

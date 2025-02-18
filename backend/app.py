@@ -71,29 +71,6 @@ def predict_hashtag_cluster():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ✅ API for Engagement Prediction
-@app.route('/predict_engagement', methods=['POST'])
-def predict_engagement():
-    data = request.json
-    likes = data.get("likes", 0)
-    shares = data.get("shares", 0)
-    comments = data.get("comments", 0)
-
-    # Validate input (Ensure values are numbers)
-    try:
-        likes, shares, comments = float(likes), float(shares), float(comments)
-    except ValueError:
-        return jsonify({"error": "Likes, shares, and comments must be numeric"}), 400
-
-    if rf_model is None:
-        return jsonify({"error": "Model not loaded. Please train and save the model first!"}), 500
-
-    try:
-        features = np.array([[likes, shares, comments]])
-        predicted_engagement = rf_model.predict(features)[0]
-        return jsonify({"predicted_engagement": float(predicted_engagement)})  # Convert NumPy float to Python float
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 # ✅ API to View Dataset (Check if CSV is Loaded)
 @app.route('/get_data', methods=['GET'])

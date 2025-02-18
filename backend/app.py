@@ -38,30 +38,6 @@ else:
 sentiment_analyzer = SentimentIntensityAnalyzer()
 
 
-
-# ✅ Train KMeans for Hashtag Clustering (Pre-trained for speed)
-vectorizer = TfidfVectorizer()
-sample_hashtags = ["#AI", "#Python", "#DataScience", "#MachineLearning", "#DeepLearning"]
-X_sample = vectorizer.fit_transform(sample_hashtags)
-
-kmeans = KMeans(n_clusters=5, random_state=42, n_init=10)
-kmeans.fit(X_sample)  # ✅ Fit KMeans on sample data
-
-@app.route('/predict_hashtag_cluster', methods=['POST'])
-def predict_hashtag_cluster():
-    data = request.json
-    hashtags = data.get("hashtags", "").strip()
-
-    if not hashtags:
-        return jsonify({"error": "No hashtags provided"}), 400
-
-    try:
-        X = vectorizer.transform([hashtags])
-        cluster = kmeans.predict(X)[0]
-        return jsonify({"cluster": int(cluster)})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 # ✅ API for Engagement Prediction
 @app.route('/predict_engagement', methods=['POST'])
 def predict_engagement():

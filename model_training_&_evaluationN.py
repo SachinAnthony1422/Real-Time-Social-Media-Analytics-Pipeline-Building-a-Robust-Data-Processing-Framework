@@ -91,4 +91,32 @@ print(f"Engagement Prediction Model MSE: {mse:.4f}")
 # Step 11: Save trained model
 joblib.dump(rf, "engagement_model.pkl")
 
+# Step 12: Hyperparameter Tuning
+param_grid = {
+    "n_estimators": [50, 100, 200],
+    "max_depth": [None, 10, 20],
+    "min_samples_split": [2, 5, 10]
+}
+grid_search = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, cv=3, scoring="neg_mean_squared_error")
+grid_search.fit(X_train, y_train)
+print("Best Parameters for Engagement Prediction:", grid_search.best_params_)
 
+# Step 13: Cross-Validation
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+mse_scores = []
+for train_index, test_index in kf.split(X):
+    X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+    y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+    rf.fit(X_train, y_train)
+    y_pred = rf.predict(X_test)
+    mse_scores.append(mean_squared_error(y_test, y_pred))
+print(f"Average Cross-Validation MSE: {np.mean(mse_scores):.4f}")
+
+# Step 14: Save results to CSV
+df.to_csv("phase3_results.csv", index=False)
+print("✅ Phase 3 Completed! Results saved as 'phase3_results.csv'")
+
+# Step 15: Download results (For Colab Users)
+from google.colab import files
+files.download("phase3_results.csv")
+files.download("engagement_model.pkl")

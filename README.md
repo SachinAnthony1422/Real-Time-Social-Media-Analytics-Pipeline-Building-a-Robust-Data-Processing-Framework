@@ -61,3 +61,12 @@ The dataset includes various features such as:
 ```bash
 git clone https://github.com/SachinAnthony1422/Real-Time-Social-Media-Analytics-Pipeline-Building-a-Robust-Data-Processing-Framework.git
 cd Real-Time-Social-Media-Analytics-Pipeline-Building-a-Robust-Data-Processing-Framework
+
+#### 2️⃣ Install Dependencies
+'''bash
+pip install -r requirements.txt
+
+#### 3️⃣ Run Flask Server
+'''bash
+python app.py
+

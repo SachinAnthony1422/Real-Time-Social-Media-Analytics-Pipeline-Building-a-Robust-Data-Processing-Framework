@@ -51,22 +51,48 @@ The dataset includes various features such as:
 ✅ Cluster distribution plots  
 ✅ Model performance graphs  
 
-### 🌍 Model Deployment using Flask
+### 🌍 Model Deployment using Flask/Django
 1️⃣ User inputs text/hashtags via a web form  
 2️⃣ Pre-trained models analyze data in real-time  
 3️⃣ Results are displayed on the dashboard  
 
 ### 🛠 Installation and Setup
-#### 1️⃣ Clone the Repository
 ```bash
+# 1️⃣ Clone the Repository
 git clone https://github.com/SachinAnthony1422/Real-Time-Social-Media-Analytics-Pipeline-Building-a-Robust-Data-Processing-Framework.git
 cd Real-Time-Social-Media-Analytics-Pipeline-Building-a-Robust-Data-Processing-Framework
 
-#### 2️⃣ Install Dependencies
-'''bash
+# 2️⃣ Install Dependencies
 pip install -r requirements.txt
 
-#### 3️⃣ Run Flask Server
-'''bash
+# 3️⃣ Run Flask Server
 python app.py
+```
+🔗 Open `http://127.0.0.1:8000/` in your browser to access the web application.
+```bash
+git clone https://github.com/SachinAnthony1422/Real-Time-Social-Media-Analytics-Pipeline-Building-a-Robust-Data-Processing-Framework.git
+cd Real-Time-Social-Media-Analytics-Pipeline-Building-a-Robust-Data-Processing-Framework
+```
+#### 2️⃣ Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+#### 3️⃣ Run Flask Server
+```bash
+python app.py
+```
+🔗 Open `http://127.0.0.1:8000/` in your browser to access the web application.
+
+### 💡 Usage
+1️⃣ Enter text or hashtag data on the analytics page.  
+2️⃣ Click "Analyze" to get insights.  
+3️⃣ View sentiment scores, trending hashtags, and engagement predictions.  
+
+### 🔮 Future Enhancements
+☁ Deploy model on cloud platforms (AWS, Heroku, or GCP)  
+🧠 Implement deep learning for improved predictions  
+📊 Integrate real-time API data streaming  
+🎨 Enhance UI/UX for a better user experience  
+
+🚀 **Happy Coding!**
 

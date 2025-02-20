@@ -1,7 +1,4 @@
-# Step 1: Install necessary libraries
-!pip install vaderSentiment  # Install the vaderSentiment library
-
-# Step 2: Import required libraries
+# Step 1: Import required libraries
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -20,11 +17,11 @@ import joblib  # Import joblib for saving the model
 warnings.filterwarnings('ignore')
 plt.style.use('ggplot')
 
-# Step 3: Load dataset
+# Step 2: Load dataset
 file_path = '/content/drive/MyDrive/Instagram_data_by_Bhanu.csv'
 df = pd.read_csv(file_path, encoding='latin1')
 
-# Step 4: Data exploration
+# Step 3: Data exploration
 print(df.head())  # View first 5 rows
 print(df.describe())  # Summary statistics
 print(df.info())  # Dataset info

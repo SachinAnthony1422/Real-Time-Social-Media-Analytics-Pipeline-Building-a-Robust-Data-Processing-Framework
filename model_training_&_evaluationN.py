@@ -27,11 +27,11 @@ print(df.describe())  # Summary statistics
 print(df.info())  # Dataset info
 print(df.isna().sum())  # Check for missing values
 
-# Step 5: Visualize missing values
+# Step 4: Visualize missing values
 msno.bar(df)
 plt.show()
 
-# Step 6: Histogram of numeric features
+# Step 5: Histogram of numeric features
 numeric_cols = df.select_dtypes(include=['number']).columns  # Select numeric columns only
 plt.figure(figsize=(15, 10))
 for plotnumber, column in enumerate(numeric_cols, 1):
@@ -42,7 +42,7 @@ for plotnumber, column in enumerate(numeric_cols, 1):
 plt.tight_layout()
 plt.show()
 
-# Step 7: Heatmap of correlation matrix
+# Step 6: Heatmap of correlation matrix
 plt.figure(figsize=(20, 12))
 numeric_df = df.select_dtypes(include=['number'])
 corr = numeric_df.corr()
@@ -50,14 +50,14 @@ mask = np.triu(np.ones_like(corr, dtype=bool))
 sns.heatmap(corr, mask=mask, linewidths=1, annot=True, fmt=".2f")
 plt.show()
 
-# Step 8: Sentiment Analysis using VADER
+# Step 7: Sentiment Analysis using VADER
 analyzer = SentimentIntensityAnalyzer()
 df['sentiment_score'] = df['Caption'].astype(str).apply(lambda x: analyzer.polarity_scores(x)['compound'])
 df['sentiment_label'] = df['sentiment_score'].apply(
     lambda x: "Positive" if x > 0.05 else ("Negative" if x < -0.05 else "Neutral")
 )
 
-# Step 9: Hashtag Clustering using TF-IDF and K-Means
+# Step 8: Hashtag Clustering using TF-IDF and K-Means
 df['Hashtags'] = df['Hashtags'].fillna("NoHashtag")
 df_filtered = df[df['Hashtags'] != "NoHashtag"]
 if df_filtered['Hashtags'].nunique() > 1:
@@ -75,7 +75,7 @@ else:
 
 df = df.merge(df_filtered[['Hashtags', 'hashtag_cluster']], on='Hashtags', how='left')
 
-# Step 10: Engagement Prediction using Random Forest Regression
+# Step 9: Engagement Prediction using Random Forest Regression
 X = df[['Likes', 'Shares', 'Comments']]
 y = df['Impressions']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -85,10 +85,10 @@ y_pred = rf.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 print(f"Engagement Prediction Model MSE: {mse:.4f}")
 
-# Step 11: Save trained model
+# Step 10: Save trained model
 joblib.dump(rf, "engagement_model.pkl")
 
-# Step 12: Hyperparameter Tuning
+# Step 11: Hyperparameter Tuning
 param_grid = {
     "n_estimators": [50, 100, 200],
     "max_depth": [None, 10, 20],
@@ -98,7 +98,7 @@ grid_search = GridSearchCV(RandomForestRegressor(random_state=42), param_grid, c
 grid_search.fit(X_train, y_train)
 print("Best Parameters for Engagement Prediction:", grid_search.best_params_)
 
-# Step 13: Cross-Validation
+# Step 12: Cross-Validation
 kf = KFold(n_splits=5, shuffle=True, random_state=42)
 mse_scores = []
 for train_index, test_index in kf.split(X):
@@ -109,11 +109,11 @@ for train_index, test_index in kf.split(X):
     mse_scores.append(mean_squared_error(y_test, y_pred))
 print(f"Average Cross-Validation MSE: {np.mean(mse_scores):.4f}")
 
-# Step 14: Save results to CSV
+# Step 13: Save results to CSV
 df.to_csv("phase3_results.csv", index=False)
 print("✅ Phase 3 Completed! Results saved as 'phase3_results.csv'")
 
-# Step 15: Download results (For Colab Users)
+# Step 14: Download results (For Colab Users)
 from google.colab import files
 files.download("phase3_results.csv")
 files.download("engagement_model.pkl")
